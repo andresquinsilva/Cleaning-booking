@@ -7,7 +7,7 @@
   "scripts": {
     "dev": "nodemon server.js",
     "start": "node server.js",
-    "lint": "echo \"(add eslint if you want)\"",
+    "lint": "echo \"(add eslint )\"",
     "seed": "node src/seed.js"
   },
   "dependencies": {
