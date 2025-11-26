@@ -1,6 +1,8 @@
+// cleaning-booking-backend/login/signup.js
 const API_BASE_URL = 'http://localhost:3000';
 
-function Login() {
+function Signup() {
+  const [name, setName] = React.useState('');
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
   const [error, setError] = React.useState('');
@@ -12,27 +14,25 @@ function Login() {
     setLoading(true);
 
     try {
-      const res = await fetch(`${API_BASE_URL}/api/auth/login`, {
+      const res = await fetch(`${API_BASE_URL}/api/auth/register`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password }),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ name, email, password }),
       });
 
       const data = await res.json();
 
       if (!res.ok) {
-        setError(data.message || 'Login failed. Please try again.');
+        setError(data.message || 'Sign up failed. Please try again.');
         setLoading(false);
         return;
       }
 
-      // Save token + user from the backend response
-      localStorage.setItem('token', data.token);
-      localStorage.setItem('user', JSON.stringify(data.user));
-
-      // Go to home page
-      // Go to home page
-      window.location.href = '../home/home.html';
+      // Option 1: just send user to login page
+      alert('Account created! Please sign in.');
+      window.location.href = 'login.html';
     } catch (err) {
       console.error(err);
       setError('Network error. Please try again.');
@@ -44,12 +44,24 @@ function Login() {
   return (
     <div className="page">
       <div className="card">
-        <h1>Sign In</h1>
-        <p className="subtitle">Login to manage your cleaning bookings.</p>
+        <h1>Create account</h1>
+        <p className="subtitle">Sign up to start booking cleanings.</p>
 
         {error && <div className="error">{error}</div>}
 
         <form onSubmit={handleSubmit}>
+          <div className="field">
+            <label htmlFor="name">Full name</label>
+            <input
+              id="name"
+              type="text"
+              required
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              placeholder="Jane Doe"
+            />
+          </div>
+
           <div className="field">
             <label htmlFor="email">Email</label>
             <input
@@ -76,18 +88,17 @@ function Login() {
           </div>
 
           <button type="submit" disabled={loading}>
-            {loading ? 'Signing in…' : 'Sign In'}
+            {loading ? 'Creating account…' : 'Sign Up'}
           </button>
         </form>
 
         <p className="note">
-          Don&apos;t have an account? <a href="signup.html">Sign up</a>
+          Already have an account? <a href="login.html">Sign in</a>
         </p>
       </div>
     </div>
   );
 }
 
-// Mount React app
 const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(<Login />);
+root.render(<Signup />);
