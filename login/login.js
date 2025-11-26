@@ -26,7 +26,7 @@ function Login() {
         return;
       }
 
-      // Save token + user from your backend response
+      // Save token + user from the backend response
       localStorage.setItem('token', data.token);
       localStorage.setItem('user', JSON.stringify(data.user));
 
