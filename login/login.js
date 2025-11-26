@@ -1,3 +1,4 @@
+// login/login.js
 const API_BASE_URL = 'http://localhost:3000';
 
 function Login() {
@@ -5,6 +6,15 @@ function Login() {
   const [password, setPassword] = React.useState('');
   const [error, setError] = React.useState('');
   const [loading, setLoading] = React.useState(false);
+
+  // If already logged in, go straight to home
+  React.useEffect(() => {
+    const token = localStorage.getItem('token');
+    const user = localStorage.getItem('user');
+    if (token && user) {
+      window.location.href = '../home/home.html';
+    }
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -21,16 +31,15 @@ function Login() {
       const data = await res.json();
 
       if (!res.ok) {
-        setError(data.message || 'Login failed. Please try again.');
+        setError(data.message || 'Invalid email or password.');
         setLoading(false);
         return;
       }
 
-      // Save token + user from the backend response
+      // Save token + user
       localStorage.setItem('token', data.token);
       localStorage.setItem('user', JSON.stringify(data.user));
 
-      // Go to home page
       // Go to home page
       window.location.href = '../home/home.html';
     } catch (err) {
@@ -44,8 +53,8 @@ function Login() {
   return (
     <div className="page">
       <div className="card">
-        <h1>Sign In</h1>
-        <p className="subtitle">Login to manage your cleaning bookings.</p>
+        <h1>Sign in</h1>
+        <p className="subtitle">Welcome back to CleanSweep.</p>
 
         {error && <div className="error">{error}</div>}
 
@@ -68,7 +77,6 @@ function Login() {
               id="password"
               type="password"
               required
-              minLength={6}
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               placeholder="••••••••"
@@ -76,18 +84,18 @@ function Login() {
           </div>
 
           <button type="submit" disabled={loading}>
-            {loading ? 'Signing in…' : 'Sign In'}
+            {loading ? 'Signing in…' : 'Sign in'}
           </button>
         </form>
 
         <p className="note">
-          Don&apos;t have an account? <a href="signup.html">Sign up</a>
+          Don&apos;t have an account?{' '}
+          <a href="signup.html">Create one</a>
         </p>
       </div>
     </div>
   );
 }
 
-// Mount React app
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(<Login />);

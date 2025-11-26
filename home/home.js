@@ -1,4 +1,4 @@
-// cleaning-booking-backend/home/home.js
+// home/home.js
 const API_BASE_URL = 'http://localhost:3000';
 
 function useAuth() {
@@ -42,7 +42,7 @@ function Home() {
     timeSlot: '8-10',
   });
 
-  // Load "my bookings" when logged in
+  // Load "my bookings"
   React.useEffect(() => {
     if (!token) return;
 
@@ -107,10 +107,10 @@ function Home() {
         return;
       }
 
-      // Add new booking to list
+      // add booking
       setBookings((prev) => [...prev, data]);
 
-      // Reset form
+      // reset form
       setForm({
         address: '',
         serviceType: 'standard',
@@ -163,8 +163,13 @@ function Home() {
 
         <nav>
           <a href="./home.html">Home</a>
-          <a href="../login/login.html">Login</a>
-          <a href="../profile/profile.html">My Profile</a>
+
+          {/* only show Login when not logged in */}
+          {!user && <a href="../login/login.html">Login</a>}
+
+          {/* only show My Profile when logged in */}
+          {user && <a href="../profile/profile.html">My Profile</a>}
+
           {user ? (
             <button type="button" onClick={signOut}>
               Sign out
@@ -313,7 +318,7 @@ function Home() {
         {!user && (
           <section className="section">
             <h2>Manage your bookings easily</h2>
-            <p>Login or sign up to view, create, edit, and cancel bookings.</p>
+            <p>Login or sign up to view, create, and cancel bookings.</p>
           </section>
         )}
       </main>
@@ -321,7 +326,6 @@ function Home() {
   );
 }
 
-// Mount React app
 const rootElement = document.getElementById('root');
 const root = ReactDOM.createRoot(rootElement);
 root.render(<Home />);
