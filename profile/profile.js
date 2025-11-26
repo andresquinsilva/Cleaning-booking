@@ -6,27 +6,73 @@ function Profile() {
   const [email, setEmail] = React.useState('');
   const [loading, setLoading] = React.useState(true);
   const [error, setError] = React.useState('');
+  const [success, setSuccess] = React.useState('');
 
-  React.useEffect(() => {
-    const token = localStorage.getItem('token');
-    if (!token) {
-      setError('You must be logged in to view your profile.');
-      setLoading(false);
-      return;
-    }
+    React.useEffect(() => {
+        const token = localStorage.getItem('token');
+        if (!token) {
+            setError('You must be logged in to view your profile.');
+            setLoading(false);
+            return;
+        }
 
-    // TODO: 
-    // 1. Call GET `${API_BASE_URL}/api/auth/me`
-    // 2. Pass Authorization: Bearer <token>
-    // 3. Set user, name, and email from the response
+        fetch(`${API_BASE_URL}/api/auth/me`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`,
+            },
+        })
+            .then((response) => {
+                if (!response.ok) { throw new Error('Failed to fetch profile data.'); }
+                return response.json();
+            })
+            .then((data) => {
+                setUser(data);
+                setName(data.name);
+                setEmail(data.email);
+                setLoading(false);
+            })
+            .catch((err) => {
+                setError(err.message);
+                setLoading(false);  
+            });
 
-    setLoading(false);
-  }, []);
+    }, []);
 
-  const handleSave = (e) => {
-    e.preventDefault();
-    // implement update logic here
-    // e.g., PATCH /api/users/me or similar endpoint
+
+    const handleSave = (e) => {
+        e.preventDefault();
+        setError('');
+        setSuccess('');
+
+        const token = localStorage.getItem('token');
+        if (!token) {
+            setError('You must be logged in to update your profile.');
+            return;
+        }
+
+        fetch(`${API_BASE_URL}/api/users/me`, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`,
+            },
+            body: JSON.stringify({ name, email }),
+        })
+            .then((response) => {
+                if (!response.ok) { throw new Error('Failed to update profile.'); }
+                return response.json();
+            })
+            .then((data) => {
+                setUser(data);
+                setName(data.name);
+                setEmail(data.email);
+                setSuccess('Profile updated successfully.');
+            })
+            .catch((err) => {
+                setError(err.message);
+            });
   };
 
   if (loading) {
