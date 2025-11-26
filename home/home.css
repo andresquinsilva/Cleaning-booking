@@ -1,7 +1,6 @@
-/* ========== FIX BROWSER CACHING ========== */
-/* v3 — This forces browser to load fresh CSS */
+/* v5 – FINAL home.css */
 
-/* ==== Global layout ==== */
+/* ===== GLOBAL ===== */
 *,
 *::before,
 *::after {
@@ -15,7 +14,7 @@ body {
   color: #111827;
 }
 
-/* ==== Header ==== */
+/* ===== HEADER ===== */
 header {
   background: #020617;
   color: #f9fafb;
@@ -50,7 +49,7 @@ header {
 .brand-text {
   display: flex;
   flex-direction: column;
-  line-height: 1.15;
+  line-height: 1.1;
 }
 
 .brand-text>div:first-child {
@@ -74,7 +73,7 @@ nav a {
   font-size: 0.9rem;
   padding: 4px 8px;
   border-radius: 999px;
-  transition: background 0.15s ease, color 0.15s ease;
+  transition: 0.2s;
 }
 
 nav a:hover {
@@ -91,7 +90,7 @@ nav button {
   font-size: 0.85rem;
   font-weight: 500;
   cursor: pointer;
-  transition: 0.15s;
+  transition: 0.2s;
 }
 
 nav button:hover {
@@ -99,132 +98,193 @@ nav button:hover {
   transform: translateY(-1px);
 }
 
-/* ==== Main Layout ==== */
+/* ===== MAIN ===== */
 .main {
-  max-width: 1200px;
-  /* WIDER PAGE */
+  max-width: 1100px;
   margin: 0 auto;
   padding: 32px 24px 48px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
 }
 
-/* ==== Hero section ==== */
-.section.hero {
-  margin-bottom: 30px;
-}
-
-.section.hero h1 {
-  font-size: clamp(2.2rem, 3vw, 2.6rem);
-  margin-bottom: 10px;
+/* ===== HERO ===== */
+.hero {
   text-align: center;
 }
 
-.section.hero p {
-  margin: 0 0 16px;
+.hero h1 {
+  font-size: clamp(2.1rem, 3vw, 2.6rem);
+  margin-bottom: 8px;
+}
+
+.hero p {
+  margin-top: 0;
   color: #4b5563;
   font-size: 1rem;
-  text-align: center;
 }
 
-/* ==== Form title ==== */
-.section h2 {
-  text-align: center;
-  margin-bottom: 18px;
-  font-size: 1.4rem;
+.cta-row {
+  margin-top: 20px;
+  display: flex;
+  gap: 16px;
+  justify-content: center;
 }
 
-/* ==== Booking Form (WIDE) ==== */
+.primary-cta,
+.secondary-cta {
+  padding: 10px 22px;
+  border-radius: 999px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: 0.2s;
+}
+
+/* Filled button */
+.primary-cta {
+  background: #111827;
+  color: #ffffff;
+  box-shadow: 0 12px 28px rgba(15, 23, 42, 0.3);
+}
+
+.primary-cta:hover {
+  background: #020617;
+  transform: translateY(-1px);
+}
+
+/* Outline button */
+.secondary-cta {
+  background: #ffffff;
+  border: 1px solid #d1d5db;
+  color: #111827;
+}
+
+.secondary-cta:hover {
+  background: #e5e7eb;
+}
+
+/* ===== BOOKING FORM ===== */
 .booking-form {
   background: #ffffff;
   border-radius: 14px;
-  padding: 26px 28px 30px;
+  padding: 22px 24px 24px;
   box-shadow: 0 14px 30px rgba(15, 23, 42, 0.14);
   border: 1px solid #e5e7eb;
-
+  max-width: 800px;
   width: 100%;
-  max-width: 900px !important;
-  /* <<< FORCED WIDE WIDTH */
   margin: 0 auto;
 }
 
+.section h2 {
+  margin-top: 0;
+  text-align: center;
+}
+
 .field {
-  margin-bottom: 16px;
+  margin-bottom: 12px;
 }
 
 .field-row {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 16px;
+  gap: 12px;
 }
 
 .field label {
   display: block;
   margin-bottom: 6px;
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   font-weight: 600;
-  color: #374151;
 }
 
 .field input,
 .field select {
   width: 100%;
-  padding: 12px 14px;
+  padding: 10px 12px;
   border-radius: 8px;
   border: 1px solid #d1d5db;
-  font-size: 1rem;
   background: #f9fafb;
-  transition: 0.15s;
 }
 
-.field input:focus,
-.field select:focus {
-  border-color: #6366f1;
-  box-shadow: 0 0 0 1px rgba(99, 102, 241, 0.5);
-  background: #ffffff;
-}
-
-.booking-form button[type="submit"] {
-  margin-top: 10px;
+.booking-form button {
   width: 100%;
-  padding: 14px 16px;
+  padding: 12px;
   border-radius: 999px;
   border: none;
   background: linear-gradient(135deg, #4f46e5, #22c55e);
   color: #ffffff;
-  font-weight: 700;
-  font-size: 1.1rem;
+  font-size: 1rem;
+  font-weight: 600;
+  margin-top: 8px;
   cursor: pointer;
-  transition: 0.15s;
+  transition: 0.2s;
 }
 
-.booking-form button[type="submit"]:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 14px 30px rgba(79, 70, 229, 0.45);
+.booking-form button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 14px 30px rgba(79, 70, 229, 0.3);
 }
 
-/* ==== Booking List ==== */
+/* ===== BOOKINGS LIST ===== */
 .booking-grid {
-  width: 100%;
-  margin-top: 20px;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-  gap: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 18px;
+  width: 100%;
 }
 
-/* ==== Responsive ==== */
+/* ===== LOGGED-OUT INFO SECTION ===== */
+.info-section {
+  max-width: 900px;
+  margin: 40px auto 0;
+  padding: 28px;
+  background: #ffffff;
+  border-radius: 18px;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 18px 40px rgba(15, 23, 42, 0.12);
+}
+
+.info-section h2 {
+  text-align: center;
+  margin-top: 0;
+  margin-bottom: 20px;
+  font-size: 1.4rem;
+}
+
+.info-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 24px;
+}
+
+.info-card h3 {
+  margin-top: 0;
+  margin-bottom: 6px;
+  font-size: 1.05rem;
+  font-weight: 600;
+}
+
+.info-card p {
+  margin: 0 0 8px;
+  color: #4b5563;
+}
+
+.info-card ul {
+  margin: 0;
+  padding-left: 18px;
+  color: #4b5563;
+  font-size: 0.9rem;
+}
+
+/* ===== RESPONSIVE ===== */
 @media (max-width: 720px) {
   .main {
-    padding: 20px 16px;
-  }
-
-  .booking-form {
     padding: 20px;
-    max-width: 100%;
   }
 
   .field-row {
     grid-template-columns: 1fr;
+  }
+
+  .cta-row {
+    flex-direction: column;
   }
 }

@@ -107,10 +107,8 @@ function Home() {
         return;
       }
 
-      // add booking
       setBookings((prev) => [...prev, data]);
 
-      // reset form
       setForm({
         address: '',
         serviceType: 'standard',
@@ -164,10 +162,7 @@ function Home() {
         <nav>
           <a href="./home.html">Home</a>
 
-          {/* only show Login when not logged in */}
           {!user && <a href="../login/login.html">Login</a>}
-
-          {/* only show My Profile when logged in */}
           {user && <a href="../profile/profile.html">My Profile</a>}
 
           {user ? (
@@ -181,9 +176,11 @@ function Home() {
       </header>
 
       <main className="main">
+        {/* HERO */}
         <section className="section hero">
           <h1>
-            Welcome{user && user.name ? `, ${user.name}` : ''} to CleanSweep
+            Welcome
+            {user && user.name ? `, ${user.name}` : ''} to CleanSweep
           </h1>
           <p>Book professional home cleaning in just a few clicks.</p>
 
@@ -201,6 +198,7 @@ function Home() {
 
         {error && <div className="error-msg">{error}</div>}
 
+        {/* LOGGED-IN VIEW */}
         {user && (
           <>
             <section className="section">
@@ -315,10 +313,35 @@ function Home() {
           </>
         )}
 
+        {/* LOGGED-OUT LANDING SECTION */}
         {!user && (
-          <section className="section">
-            <h2>Manage your bookings easily</h2>
-            <p>Login or sign up to view, create, and cancel bookings.</p>
+          <section className="info-section">
+            <h2>Why book with CleanSweep?</h2>
+            <div className="info-grid">
+              <article className="info-card">
+                <h3>Book in minutes</h3>
+                <p>
+                  Pick a date, time slot, and service. No calls or back-and-forth.
+                </p>
+                <ul>
+                  <li>Simple online booking</li>
+                  <li>Instant confirmation</li>
+                  <li>Track all bookings in one place</li>
+                </ul>
+              </article>
+
+              <article className="info-card">
+                <h3>Trusted cleaners</h3>
+                <p>
+                  Professional, background-checked cleaners for your home or condo.
+                </p>
+                <ul>
+                  <li>Standard & deep cleaning</li>
+                  <li>Move-out services</li>
+                  <li>Weekly & monthly visits</li>
+                </ul>
+              </article>
+            </div>
           </section>
         )}
       </main>

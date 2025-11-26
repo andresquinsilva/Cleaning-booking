@@ -1,3 +1,4 @@
+// profile/profile.js
 const API_BASE_URL = 'http://localhost:3000';
 
 function Profile() {
@@ -8,71 +9,68 @@ function Profile() {
   const [error, setError] = React.useState('');
   const [success, setSuccess] = React.useState('');
 
-    React.useEffect(() => {
-        const token = localStorage.getItem('token');
-        if (!token) {
-            setError('You must be logged in to view your profile.');
-            setLoading(false);
-            return;
+  React.useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      setError('You must be logged in to view your profile.');
+      setLoading(false);
+      return;
+    }
+
+    fetch(`${API_BASE_URL}/api/auth/me`, {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error('Failed to fetch profile data.');
         }
+        return response.json();
+      })
+      .then((data) => {
+        // backend returns { user: {...} }
+        const userData = data.user || data;
+        setUser(userData);
+        setName(userData.name || '');
+        setEmail(userData.email || '');
+        setLoading(false);
+      })
+      .catch((err) => {
+        setError(err.message || 'Could not load profile.');
+        setLoading(false);
+      });
+  }, []);
 
-        fetch(`${API_BASE_URL}/api/auth/me`, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`,
-            },
-        })
-            .then((response) => {
-                if (!response.ok) { throw new Error('Failed to fetch profile data.'); }
-                return response.json();
-            })
-            .then((data) => {
-                setUser(data);
-                setName(data.name);
-                setEmail(data.email);
-                setLoading(false);
-            })
-            .catch((err) => {
-                setError(err.message);
-                setLoading(false);  
-            });
+  const handleSave = (e) => {
+    e.preventDefault();
+    setError('');
+    setSuccess('');
 
-    }, []);
+    const token = localStorage.getItem('token');
+    if (!token) {
+      setError('You must be logged in to update your profile.');
+      return;
+    }
 
+    // Your backend does NOT have /api/users/me.
+    // For this version, we just update localStorage and the UI.
+    try {
+      const storedUser = JSON.parse(localStorage.getItem('user') || '{}');
+      const updatedUser = {
+        ...storedUser,
+        name,
+        email,
+      };
 
-    const handleSave = (e) => {
-        e.preventDefault();
-        setError('');
-        setSuccess('');
-
-        const token = localStorage.getItem('token');
-        if (!token) {
-            setError('You must be logged in to update your profile.');
-            return;
-        }
-
-        fetch(`${API_BASE_URL}/api/users/me`, {
-            method: 'PATCH',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`,
-            },
-            body: JSON.stringify({ name, email }),
-        })
-            .then((response) => {
-                if (!response.ok) { throw new Error('Failed to update profile.'); }
-                return response.json();
-            })
-            .then((data) => {
-                setUser(data);
-                setName(data.name);
-                setEmail(data.email);
-                setSuccess('Profile updated successfully.');
-            })
-            .catch((err) => {
-                setError(err.message);
-            });
+      localStorage.setItem('user', JSON.stringify(updatedUser));
+      setUser(updatedUser);
+      setSuccess('Profile updated successfully (local changes).');
+    } catch (err) {
+      console.error(err);
+      setError('Failed to update profile.');
+    }
   };
 
   if (loading) {
@@ -90,6 +88,12 @@ function Profile() {
         <p className="subtitle">
           View and update your CleanSweep account details.
         </p>
+
+        {success && (
+          <p style={{ color: 'green', fontSize: '0.9rem', marginBottom: '8px' }}>
+            {success}
+          </p>
+        )}
 
         <form onSubmit={handleSave}>
           <div className="field">
