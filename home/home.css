@@ -1,0 +1,144 @@
+body {
+  font-family: Arial, sans-serif;
+  background: #f9fafb;
+  margin: 0;
+}
+
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 18px;
+  background: #111827;
+  color: #ffffff;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.logo-circle {
+  width: 30px;
+  height: 30px;
+  border-radius: 999px;
+  background: #2563eb;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+
+.brand-text {
+  font-weight: 600;
+  font-size: 1.05rem;
+}
+
+nav {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+nav a {
+  color: #e5e7eb;
+  text-decoration: none;
+  font-size: 0.9rem;
+}
+
+nav button {
+  padding: 5px 10px;
+  border-radius: 4px;
+  border: none;
+  background: #ef4444;
+  color: #ffffff;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+main {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 20px 12px 32px;
+}
+
+.hero h1 {
+  margin-top: 0;
+}
+
+.hero p {
+  color: #4b5563;
+}
+
+.primary-cta,
+.secondary-cta {
+  display: inline-block;
+  margin-top: 10px;
+  margin-right: 8px;
+  padding: 8px 14px;
+  border-radius: 4px;
+  text-decoration: none;
+  font-size: 0.95rem;
+}
+
+.primary-cta {
+  background: #2563eb;
+  color: #ffffff;
+  font-weight: 600;
+}
+
+.secondary-cta {
+  border: 1px solid #2563eb;
+  color: #2563eb;
+}
+
+.section {
+  margin-top: 24px;
+}
+
+.error-msg {
+  color: #b91c1c;
+  margin-top: 6px;
+}
+
+.booking-grid {
+  margin-top: 12px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 12px;
+}
+
+.booking-card {
+  background: #ffffff;
+  padding: 12px;
+  border-radius: 6px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.booking-card h3 {
+  margin-top: 0;
+  margin-bottom: 4px;
+}
+
+.booking-meta {
+  margin: 2px 0;
+  font-size: 0.9rem;
+}
+
+.booking-actions {
+  margin-top: 8px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.delete-btn {
+  padding: 5px 10px;
+  border-radius: 4px;
+  border: none;
+  background: #ef4444;
+  color: #ffffff;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
